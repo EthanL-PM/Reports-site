@@ -1,0 +1,178 @@
+<style>
+:root {
+  --color-background-primary: #0f0f0f;
+  --color-background-secondary: #1a1a1a;
+  --color-background-success: rgba(29,158,117,0.15);
+  --color-background-warning: rgba(250,199,117,0.15);
+  --color-background-danger: rgba(226,75,74,0.15);
+  --color-text-primary: #f0ede6;
+  --color-text-secondary: #888;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #FAC775;
+  --color-text-danger: #f57a7a;
+  --color-border-tertiary: #2e2e2e;
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+}
+body { background: #0f0f0f; color: #f0ede6; font-family: DM Sans, sans-serif; padding: 1.5rem; }
+</style>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.r{padding:1rem 0}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.sub{font-size:13px;color:var(--color-text-secondary);margin-top:2px}
+.wh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+.mets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.m{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.85rem 1rem}
+.ml{font-size:12px;color:var(--color-text-secondary);margin-bottom:3px}
+.mv{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.ms{font-size:11px;margin-top:3px}
+.hit{color:var(--color-text-success)}.warn{color:var(--color-text-warning)}.miss{color:var(--color-text-danger)}.mu{color:var(--color-text-secondary)}
+.card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.sec{font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 9px;border-radius:var(--border-radius-md)}
+.bok{background:var(--color-background-success);color:var(--color-text-success)}
+.bwarn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.bbad{background:var(--color-background-danger);color:var(--color-text-danger)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;padding:0 0 8px;text-align:left}
+td{padding:7px 0;border-bottom:.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.bw{height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden;min-width:50px}
+.bf{height:100%;border-radius:3px}
+.g{background:#639922}.a{background:#BA7517}.rd{background:#E24B4A}.bl{background:#185FA5}
+.ai{background:var(--color-background-secondary);border-left:3px solid #185FA5;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:.85rem 1rem;margin-bottom:1rem;font-size:13px;line-height:1.65;color:var(--color-text-primary)}
+.ail{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:13px}
+.row:last-child{border-bottom:none}
+.ok{display:inline-block;font-size:11px;background:var(--color-background-success);color:var(--color-text-success);border-radius:4px;padding:1px 7px;margin:1px}
+.gp{display:inline-block;font-size:11px;background:var(--color-background-danger);color:var(--color-text-danger);border-radius:4px;padding:1px 7px;margin:1px}
+.st{color:#BA7517;font-size:12px}
+</style>
+<div class="r">
+<div class="wh">
+  <div><h2>Weekly sales report</h2><div class="sub">Week 13 · Fri 13 Mar – Thu 19 Mar 2026 · 4 sales reps</div></div>
+  <div style="text-align:right">
+    <div style="font-size:20px;font-weight:500;color:var(--color-text-danger)">$0</div>
+    <div style="font-size:12px;color:var(--color-text-secondary)">Sat Deals revenue this week</div>
+    <div style="font-size:11px;color:var(--color-text-danger);margin-top:2px">0 of 15 target closes</div>
+  </div>
+</div>
+
+<div class="mets">
+  <div class="m"><div class="ml">Total calls</div><div class="mv">457</div><div class="ms mu">4 reps · 5 days</div></div>
+  <div class="m"><div class="ml">Connected calls</div><div class="mv">106</div><div class="ms warn">23.2% connection rate</div></div>
+  <div class="m"><div class="ml">Sat Deals this week</div><div class="mv miss">0</div><div class="ms miss">Target: 3/day × 5 = 15</div></div>
+  <div class="m"><div class="ml">Call → deal conversion</div><div class="mv miss">0%</div><div class="ms miss">No closes in window</div></div>
+</div>
+
+<div class="ai"><div class="ail">AI summary</div>
+The sales team placed <strong>457 calls</strong> this week with a 23.2% connection rate. Frankie led volume (197) and Benjamin was close behind (167) — both covered all 5 days without gaps. Zero deals reached Sat Deal stage this week, though the pipeline is active with 3 new deals created today. The previous week's 4 closes (Wood Group, Parterre Garden, Eleganterior, Eagle Eye) all just missed the Friday 13th cutoff. Christian missed both Friday and Thursday, including today's critical golden hour window. Arthur has the lowest connection rate on the team at 15.7%.
+</div>
+
+<div class="sec">Rep call performance</div>
+<div class="card" style="padding:0 1.25rem">
+<table>
+<thead><tr>
+  <th style="padding:10px 0 8px">Rep</th>
+  <th>Calls</th><th>Connected</th><th>Rate</th>
+  <th style="min-width:70px">Volume</th>
+  <th>VM</th><th>No ans</th><th>Sat deals</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>Frankie Murgatroyd</strong></td>
+  <td>197</td><td>51</td><td class="warn">25.9%</td>
+  <td><div class="bw"><div class="bf a" style="width:100%"></div></div></td>
+  <td class="mu">12</td><td class="mu">116</td>
+  <td><span class="badge bwarn">0 / 15</span></td>
+</tr>
+<tr>
+  <td><strong>Benjamin Lee</strong></td>
+  <td>167</td><td>35</td><td class="warn">21.0%</td>
+  <td><div class="bw"><div class="bf a" style="width:85%"></div></div></td>
+  <td class="mu">66</td><td class="mu">48</td>
+  <td><span class="badge bwarn">0 / 15</span></td>
+</tr>
+<tr>
+  <td><strong>Arthur J. Archibong</strong></td>
+  <td>51</td><td>8</td><td class="miss">15.7%</td>
+  <td><div class="bw"><div class="bf rd" style="width:26%"></div></div></td>
+  <td class="mu">9</td><td class="mu">26</td>
+  <td><span class="badge bbad">0 / 15</span></td>
+</tr>
+<tr>
+  <td><strong>Christian Askham</strong></td>
+  <td>42</td><td>12</td><td class="hit">28.6%</td>
+  <td><div class="bw"><div class="bf g" style="width:21%"></div></div></td>
+  <td class="mu">18</td><td class="mu">8</td>
+  <td><span class="badge bwarn">0 / 15</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="two">
+<div class="card">
+  <div class="sec">Golden hour · 4–5 pm connected</div>
+  <div class="row"><span>Benjamin Lee</span><span><span class="st">★★★★★★★★★</span> <strong>9</strong></span></div>
+  <div class="row"><span>Frankie Murgatroyd</span><span><span class="st">★★★★★★★★</span> <strong>8</strong></span></div>
+  <div class="row"><span>Arthur J. Archibong</span><span><span class="st">★★★</span> <strong>3</strong></span></div>
+  <div class="row"><span>Christian Askham</span><span><span class="st">★</span> <strong>1</strong></span></div>
+</div>
+<div class="card">
+  <div class="sec">Golden hour · 7 pm luxury</div>
+  <div class="row"><span>Benjamin Lee</span><span><span class="st">★★★</span> <strong>3</strong></span></div>
+  <div class="row"><span>Frankie Murgatroyd</span><span><span class="st">★★</span> <strong>2</strong></span></div>
+  <div class="row"><span>Christian Askham</span><span><span class="st">★</span> <strong>1</strong></span></div>
+  <div class="row"><span>Arthur J. Archibong</span><span><span class="st">★</span> <strong>1</strong></span></div>
+</div>
+</div>
+
+<div class="sec">Daily calling gaps</div>
+<div class="card" style="padding:0 1.25rem">
+<table>
+<thead><tr>
+  <th style="padding:10px 0 8px">Rep</th>
+  <th>Fri 13</th><th>Mon 16</th><th>Tue 17</th><th>Wed 18</th><th>Thu 19</th>
+  <th>Summary</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>Frankie Murgatroyd</strong></td>
+  <td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td>
+  <td class="hit">Full week ✓</td>
+</tr>
+<tr>
+  <td><strong>Benjamin Lee</strong></td>
+  <td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td>
+  <td class="hit">Full week ✓</td>
+</tr>
+<tr>
+  <td><strong>Arthur J. Archibong</strong></td>
+  <td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="gp">✗ Thu</span></td>
+  <td class="warn">1 day missed</td>
+</tr>
+<tr>
+  <td><strong>Christian Askham</strong></td>
+  <td><span class="gp">✗ Fri</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="gp">✗ Thu</span></td>
+  <td class="miss">2 days missed</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec">Sat deals entered stage this week</div>
+<div class="card">
+  <div style="font-size:13px;color:var(--color-text-secondary);text-align:center;padding:.4rem 0">No deals moved to Sat Deal stage within Fri 13–Thu 19. Last week's closes: Wood Group ($8k · Christian), Parterre Garden ($8k · Frankie), Eleganterior ($4k · Christian), Eagle Eye ($5k · Christian). Three new deals entered pipeline today at Scheduled stage.</div>
+</div>
+
+<div class="ai"><div class="ail">Actions for this week</div>
+1. <strong>Christian Askham</strong> — best connection rate on the team (28.6%) but only 42 calls and missed 2 days including today. More volume + full attendance = more closes.<br>
+2. <strong>Arthur Jarvis Archibong</strong> — 15.7% connection rate is the weakest on the team. Review call list targeting and whether his calling hours are optimised.<br>
+3. <strong>Zero Sat Deals this week</strong> but 3 fresh deals in pipeline today. Push to convert at least one before end of play today to get on the board.<br>
+4. <strong>Benjamin Lee</strong> is the standout — 9 golden hour connects at 4–5 pm and 3 at 7 pm. Use him as the benchmark for team calling habits.
+</div>
+</div>

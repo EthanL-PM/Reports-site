@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f0f;
+    --surface: #181818;
+    --surface2: #222222;
+    --border: #2e2e2e;
+    --accent: #d4f57a;
+    --text: #f0ede6;
+    --muted: #888;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 48px 60px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo-area h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .logo-area h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .logo-area p {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+
+  .counter span { color: var(--accent); font-size: 1rem; font-weight: 500; }
+
+  .main { padding: 48px 60px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: cardIn 0.35s ease backwards;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:hover {
+    border-color: #444;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .card:hover .card-open-hint { opacity: 1; }
+
+  .card-preview {
+    width: 100%;
+    height: 180px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-preview iframe {
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: top left;
+    pointer-events: none;
+    border: none;
+    background: white;
+  }
+
+  .card-open-hint {
+    position: absolute;
+    inset: 0;
+    background: rgba(212, 245, 122, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .card-body { padding: 16px 18px; }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+  }
+
+  .card-meta { display: flex; align-items: center; justify-content: space-between; }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    background: rgba(212, 245, 122, 0.1);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 2px 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Loading / error states */
+  .state-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .state-screen .icon { font-size: 2.5rem; }
+
+  .state-screen h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-style: italic;
+    color: #555;
+  }
+
+  .state-screen p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: #444;
+    max-width: 360px;
+    line-height: 1.6;
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .modal-backdrop.open {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1100px;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modalIn 0.25s ease;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--surface2);
+    color: var(--text);
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { border-color: #555; background: #2a2a2a; }
+
+  .modal iframe { flex: 1; border: none; background: white; }
+
+  @media (max-width: 640px) {
+    header { padding: 32px 24px 24px; }
+    .main { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <h1>Report <em>Vault</em></h1>
+    <p>// click any report to open it</p>
+  </div>
+  <div class="counter" id="counter"><span>—</span> loading</div>
+</header>
+
+<div class="main" id="main">
+  <div class="state-screen" id="loadingScreen">
+    <div class="icon">⏳</div>
+    <h2>Loading reports...</h2>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Report</div>
+      <div>
+        <button class="btn" onclick="closeModalDirect()">✕ Close</button>
+      </div>
+    </div>
+    <iframe id="modalFrame" title="Report Viewer"></iframe>
+  </div>
+</div>
+
+<script>
+  async function init() {
+    let reports;
+    try {
+      const res = await fetch('reports.json');
+      if (!res.ok) throw new Error('not found');
+      reports = await res.json();
+    } catch {
+      showError();
+      return;
+    }
+
+    if (!reports.length) {
+      showEmpty();
+      return;
+    }
+
+    renderGrid(reports);
+  }
+
+  function renderGrid(reports) {
+    const main = document.getElementById('main');
+    main.innerHTML = `
+      <div class="section-label">— ${reports.length} Report${reports.length !== 1 ? 's' : ''}</div>
+      <div class="grid" id="grid"></div>
+    `;
+
+    document.getElementById('counter').innerHTML = `<span>${reports.length}</span> report${reports.length !== 1 ? 's' : ''} loaded`;
+
+    const grid = document.getElementById('grid');
+    reports.forEach((report, i) => {
+      const displayName = report.title || report.file.replace(/\.html?$/i, '').replace(/[-_]/g, ' ');
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = `${i * 0.06}s`;
+      card.innerHTML = `
+        <div class="card-preview">
+          <iframe src="reports/${report.file}" loading="lazy" sandbox="allow-same-origin"></iframe>
+          <div class="card-open-hint">↗ Open Report</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">${displayName}</div>
+          <div class="card-meta">
+            <span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted)">${report.date || ''}</span>
+            <span class="card-tag">HTML</span>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => openReport(report.file, displayName));
+      grid.appendChild(card);
+    });
+  }
+
+  function showError() {
+    document.getElementById('main').innerHTML = `
+      <div class="state-screen">
+        <div class="icon">⚠️</div>
+        <h2>Couldn't load reports</h2>
+        <p>Make sure reports.json exists in the root of your repo and is correctly formatted.</p>
+      </div>`;
+    document.getElementById('counter').innerHTML = `<span>0</span> reports`;
+  }
+
+  function showEmpty() {
+    document.getElementById('main').innerHTML = `
+      <div class="state-screen">
+        <div class="icon">📭</div>
+        <h2>No reports yet</h2>
+        <p>Add HTML files to the /reports folder and list them in reports.json.</p>
+      </div>`;
+    document.getElementById('counter').innerHTML = `<span>0</span> reports`;
+  }
+
+  function openReport(file, title) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalFrame').src = `reports/${file}`;
+    document.getElementById('modalBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalBackdrop')) closeModalDirect();
+  }
+
+  function closeModalDirect() {
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.getElementById('modalFrame').src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+  init();
+</script>
+</body>
+</html>
