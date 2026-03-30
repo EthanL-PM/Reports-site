@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Performance Report — Feb–Mar 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #0f0f0f;
+    --paper:    #f5f2ec;
+    --cream:    #ede9e0;
+    --rule:     #c8c2b4;
+    --accent:   #1a3a5c;
+    --gold:     #b8860b;
+    --red:      #8b1a1a;
+    --green:    #1a4a2e;
+    --mid:      #5a5248;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; }
+    .no-print { display: none; }
+  }
+
+  body {
+    background: #d6d0c7;
+    font-family: 'Instrument Sans', sans-serif;
+    color: var(--ink);
+    padding: 40px 20px;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    background: var(--paper);
+    border-radius: 2px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--accent);
+    color: #f5f2ec;
+    padding: 64px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(245,242,236,0.12);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 200px; height: 200px;
+    border: 1px solid rgba(245,242,236,0.08);
+    border-radius: 50%;
+  }
+  .cover-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 20px;
+  }
+  .cover-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .cover-title em {
+    font-style: italic;
+    opacity: 0.7;
+  }
+  .cover-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(245,242,236,0.2);
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .cover-stat { }
+  .cover-stat .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    display: block;
+  }
+  .cover-stat .lbl {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-top: 2px;
+  }
+
+  /* ── BODY ── */
+  .body { padding: 56px 64px; }
+
+  .section {
+    margin-bottom: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--accent);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--paper);
+    padding: 20px 22px;
+  }
+  .kpi .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .kpi .val.good { color: var(--green); }
+  .kpi .val.warn { color: var(--gold); }
+  .kpi .val.bad  { color: var(--red); }
+  .kpi .lbl {
+    font-size: 11px;
+    color: var(--mid);
+    margin-top: 6px;
+    line-height: 1.3;
+  }
+  .kpi .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--rule);
+    margin-top: 4px;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 28px;
+    font-size: 13px;
+  }
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--ink);
+    text-align: left;
+    font-weight: 500;
+  }
+  thead th.r { text-align: right; }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: middle;
+  }
+  tbody td.r { text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--cream); }
+
+  .rep-name { font-weight: 500; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .badge-green { background: #d4edda; color: var(--green); }
+  .badge-amber { background: #fef3cd; color: var(--gold); }
+  .badge-red   { background: #f8d7da; color: var(--red); }
+  .badge-grey  { background: var(--cream); color: var(--mid); }
+
+  /* ── BAR CHARTS ── */
+  .bar-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .bar-table tr { border-bottom: 1px solid var(--cream); }
+  .bar-table tr:last-child { border-bottom: none; }
+  .bar-table td { padding: 6px 8px; vertical-align: middle; }
+  .bar-table .hour-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    white-space: nowrap;
+    width: 110px;
+  }
+  .bar-table .bar-cell { width: 100%; }
+  .bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .bar-track {
+    flex: 1;
+    height: 14px;
+    background: var(--cream);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: width 0.3s;
+  }
+  .bar-fill.good { background: var(--green); }
+  .bar-fill.mid  { background: var(--gold); }
+  .bar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .rate-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    width: 46px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── ATTEMPT CHART ── */
+  .attempt-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 60px 80px;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--cream);
+    font-size: 12px;
+  }
+  .attempt-row:last-child { border-bottom: none; }
+  .attempt-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+  }
+
+  /* ── INSIGHTS BOX ── */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .insight {
+    background: var(--cream);
+    border-left: 3px solid var(--accent);
+    padding: 16px 18px;
+  }
+  .insight.warn { border-left-color: var(--gold); }
+  .insight.pos  { border-left-color: var(--green); }
+  .insight.neg  { border-left-color: var(--red); }
+  .insight-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+  .insight.warn .insight-title { color: var(--gold); }
+  .insight.pos  .insight-title { color: var(--green); }
+  .insight.neg  .insight-title { color: var(--red); }
+  .insight p { font-size: 12px; line-height: 1.5; color: var(--mid); }
+
+  /* ── SCHEDULE TABLE ── */
+  .schedule-row {
+    display: grid;
+    grid-template-columns: 120px 80px 80px 70px 70px;
+    gap: 0;
+    border-bottom: 1px solid var(--cream);
+    font-size: 12px;
+  }
+  .schedule-row.head {
+    border-bottom: 1px solid var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .schedule-row > div { padding: 9px 10px; }
+  .schedule-row > div:not(:first-child) { text-align: right; font-family: 'DM Mono', monospace; }
+  .schedule-row .block-lbl { font-weight: 500; }
+  .peak-row { background: rgba(26,58,92,0.06); }
+
+  /* ── DOW CHART ── */
+  .dow-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 80px;
+    margin: 20px 0 8px;
+  }
+  .dow-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .dow-bar { width: 100%; background: var(--accent); border-radius: 2px 2px 0 0; transition: height 0.3s; }
+  .dow-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--mid); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--cream);
+    border-top: 1px solid var(--rule);
+    padding: 24px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--mid); }
+
+  h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    margin: 28px 0 12px;
+  }
+  h3:first-child { margin-top: 0; }
+
+  .note {
+    font-size: 11px;
+    color: var(--mid);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-eyebrow">Precision Media · Internal Analysis</div>
+    <div class="cover-title">Sales Team<br><em>Performance</em><br>Report</div>
+    <div class="cover-period">01 February 2026 – 30 March 2026 &nbsp;·&nbsp; 7 Reps &nbsp;·&nbsp; Generated 30 Mar 2026</div>
+    <div class="cover-meta">
+      <div class="cover-stat">
+        <span class="val">7,782</span>
+        <span class="lbl">Outbound Dials</span>
+      </div>
+      <div class="cover-stat">
+        <span class="val">29.2%</span>
+        <span class="lbl">Connect Rate</span>
+      </div>
+      <div class="cover-stat">
+        <span class="val">182</span>
+        <span class="lbl">Deals Created</span>
+      </div>
+      <div class="cover-stat">
+        <span class="val">41.0</span>
+        <span class="lbl">Avg Dials / Day</span>
+      </div>
+    </div>
+  </div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1
+═══════════════════════════════════════════════════ -->
+  <div class="body">
+    <div class="section">
+      <div class="section-label">Section 01</div>
+      <div class="section-title">Raw Calling Volume &amp; Efficiency</div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <span class="val">7,782</span>
+          <div class="lbl">Total outbound dials</div>
+        </div>
+        <div class="kpi">
+          <span class="val">654</span>
+          <div class="lbl">Inbound calls received</div>
+        </div>
+        <div class="kpi">
+          <span class="val good">2,271</span>
+          <div class="lbl">Connected calls (29.2%)</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">1,871</span>
+          <div class="lbl">Voicemail (24.0%)</div>
+        </div>
+        <div class="kpi">
+          <span class="val bad">3,520</span>
+          <div class="lbl">No answer / busy (45.2%)</div>
+        </div>
+        <div class="kpi">
+          <span class="val">41.0</span>
+          <div class="lbl">Avg dials per rep per day</div>
+        </div>
+        <div class="kpi">
+          <span class="val">2m 13s</span>
+          <div class="lbl">Avg connected call duration</div>
+        </div>
+        <div class="kpi">
+          <span class="val">1m 24s</span>
+          <div class="lbl">Median connected call duration</div>
+        </div>
+        <div class="kpi">
+          <span class="val">120</span>
+          <div class="lbl">Wrong number</div>
+        </div>
+      </div>
+
+      <h3>Per-Rep Breakdown</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Rep</th>
+            <th class="r">Dials / Day</th>
+            <th class="r">Connected</th>
+            <th class="r">Rate</th>
+            <th class="r">Talk / Day</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rep-name">Benjamin Lee</td>
+            <td class="r">43.9</td>
+            <td class="r">661</td>
+            <td class="r"><span class="badge badge-green">43.0%</span></td>
+            <td class="r">49m 55s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Martin Gartley</td>
+            <td class="r">25.5</td>
+            <td class="r">21</td>
+            <td class="r"><span class="badge badge-green">41.2%</span></td>
+            <td class="r">19m 7s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Christian Askham</td>
+            <td class="r">36.2</td>
+            <td class="r">490</td>
+            <td class="r"><span class="badge badge-green">36.6%</span></td>
+            <td class="r">29m 53s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Arthur Jarvis Archibong</td>
+            <td class="r">51.2</td>
+            <td class="r">509</td>
+            <td class="r"><span class="badge badge-amber">26.1%</span></td>
+            <td class="r">27m 31s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Frankie Murgatroyd</td>
+            <td class="r">52.0</td>
+            <td class="r">405</td>
+            <td class="r"><span class="badge badge-amber">21.6%</span></td>
+            <td class="r">18m 0s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Matthew Elstone</td>
+            <td class="r">26.9</td>
+            <td class="r">182</td>
+            <td class="r"><span class="badge badge-red">18.3%</span></td>
+            <td class="r">10m 4s</td>
+          </tr>
+          <tr>
+            <td class="rep-name">Jon Foxley</td>
+            <td class="r">8.8</td>
+            <td class="r">3</td>
+            <td class="r"><span class="badge badge-red">6.8%</span></td>
+            <td class="r">32s</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="two-col">
+        <div>
+          <h3>Dials by Hour (EST)</h3>
+          <table class="bar-table">
+            <tbody>
+              <tr>
+                <td class="hour-lbl">12:00–13:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+                    <span class="bar-num">1,239</span>
+                    <span class="rate-lbl">29.7%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">13:00–14:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+                    <span class="bar-num">313</span>
+                    <span class="rate-lbl">37.1%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">14:00–15:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill" style="width:93%"></div></div>
+                    <span class="bar-num">1,155</span>
+                    <span class="rate-lbl">26.1%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">15:00–16:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+                    <span class="bar-num">1,170</span>
+                    <span class="rate-lbl">27.3%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">16:00–17:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill mid" style="width:55%"></div></div>
+                    <span class="bar-num">677</span>
+                    <span class="rate-lbl">29.2%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">17:00–18:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill good" style="width:8%"></div></div>
+                    <span class="bar-num">95</span>
+                    <span class="rate-lbl">35.8%</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="hour-lbl">18:00–19:00</td>
+                <td class="bar-cell">
+                  <div class="bar-wrap">
+                    <div class="bar-track"><div class="bar-fill good" style="width:2%"></div></div>
+                    <span class="bar-num">27</span>
+                    <span class="rate-lbl">40.7%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="note">Peak connect rate at 18:00–19:00 EST (40.7%) despite low volume — untapped window.</p>
+        </div>
+
+        <div>
+          <h3>Dials by Day of Week</h3>
+          <div class="dow-chart">
+            <div class="dow-col">
+              <div class="dow-bar" style="height:72px"></div>
+              <div class="dow-lbl">Mon</div>
+            </div>
+            <div class="dow-col">
+              <div class="dow-bar" style="height:80px"></div>
+              <div class="dow-lbl">Tue</div>
+            </div>
+            <div class="dow-col">
+              <div class="dow-bar" style="height:78px"></div>
+              <div class="dow-lbl">Wed</div>
+            </div>
+            <div class="dow-col">
+              <div class="dow-bar" style="height:76px"></div>
+              <div class="dow-lbl">Thu</div>
+            </div>
+            <div class="dow-col">
+              <div class="dow-bar" style="height:68px"></div>
+              <div class="dow-lbl">Fri</div>
+            </div>
+            <div class="dow-col">
+              <div class="dow-bar" style="height:2px; opacity:0.3"></div>
+              <div class="dow-lbl">Sat</div>
+            </div>
+          </div>
+          <p class="note">Volume is consistent Mon–Fri. Tuesday is peak day at 1,673 dials.</p>
+
+          <h3 style="margin-top:28px">Best 2-Hour Windows</h3>
+          <table>
+            <thead>
+              <tr><th>Window (EST)</th><th class="r">Connect Rate</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>18:00–20:00</td><td class="r"><span class="badge badge-green">39.3%</span></td></tr>
+              <tr><td>17:00–19:00</td><td class="r"><span class="badge badge-green">36.9%</span></td></tr>
+              <tr><td>12:00–14:00</td><td class="r"><span class="badge badge-amber">31.2%</span></td></tr>
+              <tr><td>16:00–18:00</td><td class="r"><span class="badge badge-amber">30.1%</span></td></tr>
+              <tr><td>13:00–15:00</td><td class="r"><span class="badge badge-amber">28.4%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2
+═══════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Section 02</div>
+      <div class="section-title">Call Frequency &amp; Attempt Patterns</div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <span class="val">2,091</span>
+          <div class="lbl">Unique contacts called</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">2.1</span>
+          <div class="lbl">Avg attempts per contact</div>
+        </div>
+        <div class="kpi">
+          <span class="val bad">159.7h</span>
+          <div class="lbl">Avg gap — 1st to 2nd attempt</div>
+        </div>
+        <div class="kpi">
+          <span class="val bad">156.3h</span>
+          <div class="lbl">Avg gap — later attempts</div>
+        </div>
+        <div class="kpi">
+          <span class="val">1.2</span>
+          <div class="lbl">Avg same-day calls / contact</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">55.9%</span>
+          <div class="lbl">Contacts called only once</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>Attempt Distribution</h3>
+          <table class="bar-table">
+            <tbody>
+              <tr><td class="hour-lbl">1 call</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill bad" style="width:100%"></div></div><span class="bar-num">1,169</span></div></td></tr>
+              <tr><td class="hour-lbl">2 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-num">391</span></div></td></tr>
+              <tr><td class="hour-lbl">3 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:19%"></div></div><span class="bar-num">222</span></div></td></tr>
+              <tr><td class="hour-lbl">4 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:11%"></div></div><span class="bar-num">127</span></div></td></tr>
+              <tr><td class="hour-lbl">5 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:7%"></div></div><span class="bar-num">78</span></div></td></tr>
+              <tr><td class="hour-lbl">6 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-num">27</span></div></td></tr>
+              <tr><td class="hour-lbl">7 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-num">22</span></div></td></tr>
+              <tr><td class="hour-lbl">8 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-num">22</span></div></td></tr>
+              <tr><td class="hour-lbl">9 calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span class="bar-num">14</span></div></td></tr>
+              <tr><td class="hour-lbl">10+ calls</td><td class="bar-cell"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-num">19</span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3>Connect Rate by Attempt</h3>
+          <div class="attempt-row head" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);border-bottom:1px solid var(--ink);">
+            <div>Attempt</div><div>Rate</div><div style="text-align:right">Connected</div><div style="text-align:right">Total</div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 1</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill good" style="width:32.2%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">674</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-green">32.2%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 2</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill mid" style="width:23.8%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">219</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-amber">23.8%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 3</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill mid" style="width:18.6%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">99</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-amber">18.6%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 4</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill bad" style="width:17.5%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">54</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-red">17.5%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 5</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill bad" style="width:15.9%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">29</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-red">15.9%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 6</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill bad" style="width:14.4%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">15</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-red">14.4%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 7</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill bad" style="width:14.3%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">11</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-red">14.3%</span></div>
+          </div>
+          <div class="attempt-row">
+            <div class="attempt-lbl">Attempt 8+</div>
+            <div><div class="bar-track" style="height:10px"><div class="bar-fill mid" style="width:20%"></div></div></div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px">30</div>
+            <div style="text-align:right;font-family:'DM Mono',monospace;font-size:10px"><span class="badge badge-amber">20.0%</span></div>
+          </div>
+          <p class="note" style="margin-top:12px">Returns drop sharply after attempt 1. Attempt 5–7 return less than half the first-attempt rate.</p>
+        </div>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight neg">
+          <div class="insight-title">⚠ Re-attempt Gap Too Long</div>
+          <p>Average gap between 1st and 2nd attempt is 159.7 hours (~6.6 days). Best practice for warm outreach is 24–48 hours. This gap suggests contacts are not being systematically re-worked.</p>
+        </div>
+        <div class="insight neg">
+          <div class="insight-title">⚠ Single-Touch Problem</div>
+          <p>55.9% of contacts were called only once. Given a 32.2% first-attempt connect rate, over 800 contacts who weren't reached on attempt 1 were never followed up on.</p>
+        </div>
+        <div class="insight pos">
+          <div class="insight-title">✓ Diminishing Returns Clear</div>
+          <p>Data clearly shows the optimal ceiling is attempts 3–4. Beyond attempt 5, connect rates drop below 16% and the marginal return does not justify the time cost.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-title">→ Recommended Attempt Limit</div>
+          <p>3–4 attempts per contact within a structured cadence (Day 1, Day 2, Day 4–5). After 4 attempts with no connection, move to email/social or archive the lead.</p>
+        </div>
+      </div>
+    </div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 3
+═══════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Section 03</div>
+      <div class="section-title">Quality &amp; Outcomes</div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <span class="val">748</span>
+          <div class="lbl">Meaningful convos (≥2 min)</div>
+        </div>
+        <div class="kpi">
+          <span class="val">166</span>
+          <div class="lbl">Contacts that received a deal</div>
+        </div>
+        <div class="kpi">
+          <span class="val">182</span>
+          <div class="lbl">Total deals created</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">10.4</span>
+          <div class="lbl">Calls per meaningful convo</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">46.9</span>
+          <div class="lbl">Calls per deal contact</div>
+        </div>
+        <div class="kpi">
+          <span class="val good">37.8%</span>
+          <div class="lbl">Connect rate — deal contacts</div>
+        </div>
+        <div class="kpi">
+          <span class="val">2m 26s</span>
+          <div class="lbl">Avg call dur — deal contacts</div>
+        </div>
+        <div class="kpi">
+          <span class="val">1m 53s</span>
+          <div class="lbl">Avg call dur — non-deal contacts</div>
+        </div>
+        <div class="kpi">
+          <span class="val good">+33s</span>
+          <div class="lbl">Duration premium on deals</div>
+        </div>
+      </div>
+
+      <h3>Deal Contacts per Rep</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Rep</th>
+            <th class="r">Deal Contacts</th>
+            <th class="r">% of Team Total</th>
+            <th>Performance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rep-name">Christian Askham</td>
+            <td class="r">71</td>
+            <td class="r">42.8%</td>
+            <td><span class="badge badge-green">Outstanding</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Frankie Murgatroyd</td>
+            <td class="r">37</td>
+            <td class="r">22.3%</td>
+            <td><span class="badge badge-green">Strong</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Benjamin Lee</td>
+            <td class="r">31</td>
+            <td class="r">18.7%</td>
+            <td><span class="badge badge-amber">Good</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Arthur Jarvis Archibong</td>
+            <td class="r">8</td>
+            <td class="r">4.8%</td>
+            <td><span class="badge badge-red">Below Average</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Matthew Elstone</td>
+            <td class="r">1</td>
+            <td class="r">0.6%</td>
+            <td><span class="badge badge-red">Critical</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Martin Gartley</td>
+            <td class="r">0</td>
+            <td class="r">—</td>
+            <td><span class="badge badge-grey">No Data</span></td>
+          </tr>
+          <tr>
+            <td class="rep-name">Jon Foxley</td>
+            <td class="r">0</td>
+            <td class="r">—</td>
+            <td><span class="badge badge-grey">No Data</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight-grid">
+        <div class="insight pos">
+          <div class="insight-title">✓ Duration Signals Quality</div>
+          <p>Calls to contacts who received a deal averaged 2m 26s vs 1m 53s for non-deal contacts — a 33-second premium. Longer calls are a reliable proxy for higher quality conversations.</p>
+        </div>
+        <div class="insight neg">
+          <div class="insight-title">⚠ Concentration Risk</div>
+          <p>Christian Askham accounts for 42.8% of all deal contacts. The top 3 reps (Askham, Murgatroyd, Lee) account for 83.8%. Activity from the remaining 4 reps is not converting.</p>
+        </div>
+      </div>
+    </div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 4
+═══════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Section 04</div>
+      <div class="section-title">Schedule Validation</div>
+
+      <div class="kpi-grid" style="grid-template-columns:1fr 1fr">
+        <div class="kpi">
+          <span class="val good">30.2%</span>
+          <div class="lbl">Connect rate — Pre 14:00 EST (4,657 dials)</div>
+        </div>
+        <div class="kpi">
+          <span class="val warn">27.6%</span>
+          <div class="lbl">Connect rate — Post 14:00 EST (3,125 dials)</div>
+        </div>
+      </div>
+
+      <h3>Proposed Schedule Block Performance</h3>
+      <div class="schedule-row head">
+        <div>Block (EST)</div>
+        <div style="text-align:right">Dials</div>
+        <div style="text-align:right">Connected</div>
+        <div style="text-align:right">Rate</div>
+        <div style="text-align:right">Inbound</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">14:00–15:00</div>
+        <div>1,155</div><div>301</div><div>26.1%</div><div>82</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">15:00–16:00</div>
+        <div>1,170</div><div>319</div><div>27.3%</div><div>87</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">16:00–17:00</div>
+        <div>677</div><div>198</div><div>29.2%</div><div>68</div>
+      </div>
+      <div class="schedule-row peak-row">
+        <div class="block-lbl">17:00–18:00 ★</div>
+        <div>95</div><div>34</div><div>35.8%</div><div>42</div>
+      </div>
+      <div class="schedule-row peak-row">
+        <div class="block-lbl">18:00–19:00 ★</div>
+        <div>27</div><div>11</div><div>40.7%</div><div>27</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">19:00–20:00</div>
+        <div>1</div><div>0</div><div>—</div><div>10</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">20:00–21:00</div>
+        <div>0</div><div>0</div><div>—</div><div>2</div>
+      </div>
+      <div class="schedule-row">
+        <div class="block-lbl">21:00–22:00</div>
+        <div>0</div><div>0</div><div>—</div><div>2</div>
+      </div>
+      <p class="note" style="margin-top:8px">★ Highlighted rows show the highest connect rate windows — currently severely under-utilised.</p>
+
+      <div class="insight-grid" style="margin-top:24px">
+        <div class="insight neg">
+          <div class="insight-title">⚠ Volume Drops Off a Cliff at 17:00</div>
+          <p>The data shows volume falls from 677 dials at 16:00–17:00 to just 95 at 17:00–18:00. Yet connect rates at 17:00–19:00 EST are the highest of the day. The proposed later shift is data-backed.</p>
+        </div>
+        <div class="insight pos">
+          <div class="insight-title">✓ Proposed Schedule Supported</div>
+          <p>The 14:00–22:00 EST shift structure is validated by the data. The 17:00–19:00 EST window (35–40% connect rates) aligns directly with the proposed call blocks in that period.</p>
+        </div>
+        <div class="insight warn">
+          <div class="insight-title">→ 19:00–22:00 EST Untested</div>
+          <p>The proposed schedule extends calling to 22:00 EST, but there is essentially zero historical data for this window. Results here are unknown and will need monitoring in the first 2–3 weeks.</p>
+        </div>
+        <div class="insight pos">
+          <div class="insight-title">✓ Inbound Peaks in Proposed Windows</div>
+          <p>Inbound call volume peaks at 14:00–17:00 EST (237 inbound calls), supporting the proposed structure where call blocks are protected in exactly those hours.</p>
+        </div>
+      </div>
+    </div>
+
+<!-- ═══════════════════════════════════════════════════
+     DATA QUALITY NOTES
+═══════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Appendix</div>
+      <div class="section-title">Data Quality Notes</div>
+      <table>
+        <thead><tr><th>Area</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="width:160px;font-weight:500;white-space:nowrap">Call Disposition</td>
+            <td style="font-size:12px;color:var(--mid)">Not always logged by reps. Duration-based fallback applied: ≥45s without disposition = Connected; shorter = Voicemail or No Answer.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;white-space:nowrap">Deal Attribution</td>
+            <td style="font-size:12px;color:var(--mid)">Based on contact overlap — whether a called contact also had a deal created in the same period. Does not prove causation. Inbound calls can also drive deal creation.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;white-space:nowrap">Timezone</td>
+            <td style="font-size:12px;color:var(--mid)">All times shown as EST (UTC−5). Daylight saving (EDT, UTC−4) was active from 8 March onwards — calls after that date are shown ~1 hour early.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;white-space:nowrap">Martin Gartley</td>
+            <td style="font-size:12px;color:var(--mid)">Low dial volume (25.5/day) and 0 deal contacts. Data may reflect partial onboarding period rather than full activity.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;white-space:nowrap">Jon Foxley</td>
+            <td style="font-size:12px;color:var(--mid)">Very low volume (8.8 dials/day, 3 connected). Results are not statistically meaningful. Data likely reflects a partial period.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Precision Media &nbsp;·&nbsp; Internal Use Only</p>
+    <p>01 Feb 2026 – 30 Mar 2026 &nbsp;·&nbsp; Generated 30 Mar 2026</p>
+  </div>
+</div>
+
+</body>
+</html>
